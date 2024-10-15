@@ -114,14 +114,16 @@ function Inventory() {
 
 
   return (
+    <>
+                <Header />
+
+    <div className='update'>
+    <VertNav />
+
     <div className='admin_inventory_container'>
             <Helmet>
         <title>Inventory</title>
       </Helmet>
-            <div className='c_header'>
-
-            <Header />
-            </div>
          
             <div className="inventory_details_header">
                 <h1>Inventory Details</h1>
@@ -134,13 +136,7 @@ function Inventory() {
             <div className="horizontal_line_container">
                 <hr className="horizontal_line" />
             </div>
-            <div className='update'>
 
-            <div className='gb_h9'>
-        <div className='gb_ver_nav2'>
-          <VertNav />
-        </div>
-        </div>
             <div className="admin_inventory_table_container">
                 <table className="admin_inventory_table">
                     <thead>
@@ -177,7 +173,6 @@ function Inventory() {
                     </tbody>
                 </table>
             </div>
-           </div> 
             {isAddPopupOpen && <AddProductPopup onClose={AddtogglePopup} />}
             {/* {isDeletePopupOpen && <DeleteProductPopup onClose={DeletetogglePopup} />} */}
             {isEditPopupOpen && <EditProductPopup productData={editProductData} onClose={EdittogglePopup} />}
@@ -190,6 +185,8 @@ function Inventory() {
                 />
             )}
         </div>
+        </div>
+        </>
   )
 }
 

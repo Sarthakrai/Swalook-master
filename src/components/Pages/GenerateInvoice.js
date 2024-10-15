@@ -65,6 +65,7 @@ console.log(sname);
    const [expiryDays, setExpiryDays] = useState('');
    const [showPopup, setShowPopup] = useState(false);
    const [popupMessage, setPopupMessage] = useState('');
+   const [staffData, setStaffData] = useState([]);
 
     const bid = localStorage.getItem('branch_id');
 
@@ -89,8 +90,9 @@ console.log(sname);
               if (!response.ok) {
                   throw new Error('Network response was not ok.');
               }
-
+            
               const data = await response.json();
+
               setInventoryData(data.data.map((product) => ({
                   key: product.id,
                   value: product.product_name,
@@ -104,6 +106,38 @@ console.log(sname);
       };
 
       fetchData();
+  }, []);
+
+  const fetchStaffData = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const staffResponse = await fetch(`${config.apiUrl}/api/swalook/staff/?branch_name=${bid}`, {
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+        // console.log('kya hau', )
+      if (!staffResponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const staffData = await staffResponse.json();
+      const staffArray = Array.isArray(staffData.table_data) ? staffData.table_data : [];
+
+      const formattedOptions = staffArray.map(staff => ({
+        label: `${staff.staff_name} (${staff.staff_role})`     
+      }));
+
+      setStaffData(formattedOptions);
+    } catch (error) {
+      console.error('Error fetching staff data:', error);
+      setStaffData([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchStaffData();
   }, []);
 
     useEffect(() => {
@@ -202,50 +236,50 @@ console.log(sname);
     };
 
 
-    const branchoption = {
-      'Simply Divine Unisex Beauty Salon': [
-        { key: 'Rajni', value: 'Rajni' },
-        { key: 'Manju', value: 'Manju' },
-        { key: 'Pooja', value: 'Pooja' },
-        { key: 'Seela', value: 'Seela' },
-        { key: 'Minakshi', value: 'Minakshi' },
-        { key: 'Zainab', value: 'Zainab' },
-        { key: 'Manoj', value: 'Manoj' }
-      ],
-      'Simply Divine Salon' : [
-        { key: 'Zishan', value: 'Zishan' },
-        { key: 'Raman', value: 'Raman' },
-        { key: 'Renu', value: 'Renu' },
-        { key: 'Mohan', value: 'Mohan' },
-        { key: 'Sahib', value: 'Sahib' },
-        { key: 'Piyush', value: 'Piyush' },
-        { key: 'Bhim', value: 'Bhim' },
-        { key: 'Nidhi', value: 'Nidhi' },
-        { key:'Tanu ', value: 'Tanu' },
-      ],
-      'test salon':[
-        { key: 'sarthak', value: 'Sarthak' },
-        { key: 'devashish', value:'devashish' },
-      ],
-      'Ads Beauty Salon':[
-        { key: 'Tara Sonar', value: 'Tara Sonar' },
-        { key: 'Moni Das', value: 'Moni Das' },
-        { key: 'Ansh', value: 'Ansh' },
-        { key: 'Imran', value: 'Imran' },
-        { key: 'Bhoirobi Saikia', value: 'Bhoirobi Saikia' },
-        { key: 'Sonali Kumari', value: 'Sonali Kumari' },
-        { key: 'Niki Sonowal', value: 'Niki Sonowal' },
-        { key: 'Junaki Hazorika', value: 'Junaki Hazorika'},
-      ],
-      'AB Unisex Salon': [
-        { key: ' Gobinda Dey', value: 'Gobinda Dey' },
-        { key: 'JATIN BASFOR', value: 'JATIN BASFOR' },
-        { key: 'NEELAM TAMANG', value: 'NEELAM TAMANG' },
-        { key: 'SILPA LAMA ', value: 'SILPA LAMA ' },
-             ]
-    }
+    // const branchoption = {
+    //   'Simply Divine Unisex Beauty Salon': [
+    //     { key: 'Rajni', value: 'Rajni' },
+    //     { key: 'Manju', value: 'Manju' },
+    //     { key: 'Pooja', value: 'Pooja' },
+    //     { key: 'Seela', value: 'Seela' },
+    //     { key: 'Minakshi', value: 'Minakshi' },
+    //     { key: 'Zainab', value: 'Zainab' },
+    //     { key: 'Manoj', value: 'Manoj' }
+    //   ],
+    //   'Simply Divine Salon' : [
+    //     { key: 'Zishan', value: 'Zishan' },
+    //     { key: 'Raman', value: 'Raman' },
+    //     { key: 'Renu', value: 'Renu' },
+    //     { key: 'Mohan', value: 'Mohan' },
+    //     { key: 'Sahib', value: 'Sahib' },
+    //     { key: 'Piyush', value: 'Piyush' },
+    //     { key: 'Bhim', value: 'Bhim' },
+    //     { key: 'Nidhi', value: 'Nidhi' },
+    //     { key:'Tanu ', value: 'Tanu' },
+    //   ],
+    //   'test salon':[
+    //     { key: 'sarthak', value: 'Sarthak' },
+    //     { key: 'devashish', value:'devashish' },
+    //   ],
+    //   'Ads Beauty Salon':[
+    //     { key: 'Tara Sonar', value: 'Tara Sonar' },
+    //     { key: 'Moni Das', value: 'Moni Das' },
+    //     { key: 'Ansh', value: 'Ansh' },
+    //     { key: 'Imran', value: 'Imran' },
+    //     { key: 'Bhoirobi Saikia', value: 'Bhoirobi Saikia' },
+    //     { key: 'Sonali Kumari', value: 'Sonali Kumari' },
+    //     { key: 'Niki Sonowal', value: 'Niki Sonowal' },
+    //     { key: 'Junaki Hazorika', value: 'Junaki Hazorika'},
+    //   ],
+    //   'AB Unisex Salon': [
+    //     { key: ' Gobinda Dey', value: 'Gobinda Dey' },
+    //     { key: 'JATIN BASFOR', value: 'JATIN BASFOR' },
+    //     { key: 'NEELAM TAMANG', value: 'NEELAM TAMANG' },
+    //     { key: 'SILPA LAMA ', value: 'SILPA LAMA ' },
+    //          ]
+    // }
     
-    const servedByOptions = [ ...(branchoption[sname] || [])];
+    // const servedByOptions = [ ...(branchoption[sname] || [])];
 
 
     const handleServedSelect = (selectedList) => {
@@ -773,12 +807,11 @@ const handleMembershipChange = async (selectMembership) => {
                 <h3 className='sb'>Served By:</h3>
                 <div className='gb_select-field-cont'>
                 <Multiselect
-                options={servedByOptions}
+                options={staffData}
                 showSearch={true}
                 onSelect={handleServedSelect}
                 onRemove={handleServedSelect}
-                displayValue="value"
-                placeholder="Select Served By"
+                displayValue="label"                placeholder="Select Served By"
                 className="gb_select-field"
                 />
                 </div>

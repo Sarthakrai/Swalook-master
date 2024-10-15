@@ -8,6 +8,7 @@ import SY from '../../assets/SY.png'
 import CLP from '../../assets/CLP.png'
 import axios from 'axios';
 import config from '../../config';
+import team from "../../assets/team.avif"
 
 function Settings() {
   const [newRows, setNewRows] = useState([]);
@@ -68,6 +69,11 @@ const handleSave = async () => {
           <img src={HD} alt="Help Desk" />
           <h2>Help Desk</h2>
           <p>Resolve your Query</p>
+        </Link>
+        <Link to={`/${sname}/${branchName}/staffSettings`} className="settings_box">
+          <img src={team} alt="Help Desk" />
+          <h2>Staff Working Days</h2>
+          <p>Edit Commission</p>
         </Link>
         </div>
     </div>

@@ -1,0 +1,132 @@
+/* StaffManagement.css */
+
+.staff-management-container {
+    padding: 16px;
+    width: 100%;
+  }
+  
+  .staff-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  
+  .staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+  .salary{
+    text-align: center;
+  }
+
+  .staff-table thead {
+    background-color: #f0f0f0;
+  }
+  .button-container{
+    width: 12rem;
+  }
+  
+  .staff-table th,
+  .staff-table td {
+    padding: 12px;
+    /* text-align: left; */
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .staff-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  .attendance-button,
+  .salary-slip-button {
+    background-color: #007bff; 
+    color: white;
+    padding: 5px 6px; 
+    font-size: 12px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    line-height: 1;
+    min-width: 50px;
+  }
+  
+  .attendance-button:hover,
+  .salary-slip-button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  .attendance-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .salary-slip-button {
+    background-color: #007bff;
+  }
+  
+  .salary-slip-button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .staff-table th,
+    .staff-table td {
+      padding: 8px;
+    }
+  
+    .staff-title {
+      font-size: 1.25rem;
+    }
+  
+    .attendance-button,
+    .salary-slip-button {
+      padding: 2px 5px;
+      font-size: 11px;
+    }
+  }
+  
+
+.toaster_icon {
+  background-color: #4caf50;
+  color: #ffffff; 
+  padding: 12px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.2s ease; 
+  position: relative; 
+  max-width: 300px; 
+  margin: 10px auto;
+  font-size: 16px;
+}
+
+.toaster_icon:hover {
+  transform: translateY(-2px);
+}
+
+.toaster_icon::before {
+  content: '✔'; 
+  margin-right: 10px;
+  font-size: 20px; 
+}
+
+.toaster_icon-close {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 18px; 
+  cursor: pointer; 
+}

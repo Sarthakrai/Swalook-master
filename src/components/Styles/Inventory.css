@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+.admin_inventory_container{
+    width: 100%;
+}
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -13,6 +16,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+
 }
 
 .inventory_details_header h1 {

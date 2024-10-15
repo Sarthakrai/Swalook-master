@@ -75,6 +75,10 @@ import AppointAsInv from './components/Pages/AppointAsInv';
 import Inventory from './components/Pages/Inventory';
 import CLP_Setting from './components/Pages/CLP_Setting';
 import CustomerL from './components/Pages/CustomerL';
+import StaffManagement from './components/Pages/StaffManagement';
+import "./index.css"
+import AdminMangement from './components/Pages/AdminMangement';
+import StaffSetting from './components/Pages/StaffSetting';
 
 function App() {
   const isLoggedIn = Cookies.get('loggedIn') === 'true';
@@ -112,6 +116,10 @@ function App() {
             <Route path="/:salon_name/:branchName/inventory" element={<Inventory />} />
             <Route path="/:salon_name/:branchName/settings/clpsetting" element={<CLP_Setting />} />
             <Route path="/:salon_name/:branchName/clp" element={<CustomerL />} />
+            <Route path="/:salon_name/:branchName/attendance" element={<StaffManagement />} />
+            <Route path="/:salon_name/:branchName/staff" element={<AdminMangement />} />
+            <Route path="/:salon_name/:branchName/staffSettings" element={<StaffSetting />} />
+
           </Route>
           <Route path="*" element={<ErrorPage/>} />
           <Route path="/error" element={<GlobalErrorPage/>} />

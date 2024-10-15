@@ -6,6 +6,9 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable'; 
+import PeopleIcon from '@mui/icons-material/People';
+
 
 function VertNav() {
   const branchName = localStorage.getItem('branch_name');
@@ -104,6 +107,20 @@ function VertNav() {
         </>
       )}
     </div>
+    {userType !== 'staff' && ( 
+        <div className="icon-container">
+          <Link to={`/${sname}/${branchName}/staff`}>
+            <PeopleIcon style={{ fontSize: 27, margin: '5px', color: 'white' }} />
+            <span className="icon-text">Staff</span>
+          </Link>
+        </div>
+      )}
+    <div className="icon-container">
+        <Link to={`/${sname}/${branchName}/attendance`}>
+          <EventAvailableIcon style={{ fontSize: 27, margin: '5px', color: 'white' }} />
+          <span className="icon-text">Attendance</span>
+        </Link>
+      </div>
     </div>
   );
 }

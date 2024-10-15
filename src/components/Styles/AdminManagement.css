@@ -1,0 +1,170 @@
+.staff-mgmt-container {
+    padding: 20px;
+    width: 100%;
+
+  }
+  .table-responsive{
+    /* max-height: 400px; */
+    overflow-y: auto;
+  }
+  .staff-mgmt-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    /* margin-left: 4rem; */
+  }
+  
+  .staff-mgmt-add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    width: auto;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }
+  .add-staff
+  {
+    display: flex;
+    justify-content: right;
+    align-items: end;
+  }
+  
+  .staff-mgmt-add-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .staff-mgmt-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    /* margin-top: 3rem; */
+  }
+  
+  .staff-mgmt-table th,
+  .staff-mgmt-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .staff-mgmt-table th {
+    background-color: #f0f0f0;
+    color: black;
+  }
+  
+  .staff-mgmt-attendance-button,
+  .staff-mgmt-salary-button {
+    background-color: #007bff; /* Green color */
+    color: white;
+    padding: 5px 6px; /* Reduced padding for a more compact button */
+    font-size: 12px; /* Smaller font size for a more compact look */
+    border: none;
+    border-radius: 2px; /* Reduced border radius */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block; /* Ensures the button doesn't stretch horizontally */
+    line-height: 1; /* Keeps the button height minimal */
+    min-width: 50px; /* Ensures button has a minimum width */
+  }
+  
+  .staff-mgmt-attendance-button:hover,
+  .staff-mgmt-salary-button:hover {
+    background-color: #0056b3;
+  }
+  .modal-content6 {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .modal-content6 h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333333;
+  }
+  .staff-mgmt-delete-button{
+    background-color: black;
+
+  }
+  
+  .delete_icon, .delete_item {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete_icon {
+    background-color: #007bff;
+  }
+  
+  .delete_icon:hover {
+    background-color: #0056b3;
+  }
+  
+  .delete_item {
+    background-color: #dc3545;
+  }
+  
+  .delete_item:hover {
+    background-color: #c82333;
+  }
+  
+  .button_responsive {
+    display: flex;
+    gap: 1rem;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  .modal-overlay6 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 500px) {
+    .modal-content6 {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .delete_icon, .delete_item {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .gb_ver_nav2{
+    height: 69vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: -1.5rem;
+  }
+  .gb_h7{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 21vh;
+    padding-right: 1rem;
+  }

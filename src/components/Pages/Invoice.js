@@ -144,7 +144,7 @@ function Invoice() {
   
   useEffect(() => {
     const fetchProductData = async () => {
-      const token = localStorage.getItem('token'); // Ensure token is defined
+      const token = localStorage.getItem('token'); 
     
       try {
         const response = await axios.get(apipoint, {
