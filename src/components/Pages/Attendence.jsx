@@ -6,8 +6,9 @@ import config from "../../config";
 
 const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
   const [markedDates, setMarkedDates] = useState({});
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [originalMarkedDates, setOriginalMarkedDates] = useState({}); // Store original attendance
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const today = new Date();
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
@@ -16,7 +17,7 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
   const fetchAttendance = async () => {
     const token = localStorage.getItem('token');
     const bid = localStorage.getItem('branch_id');
-  
+
     try {
       const response = await fetch(`${config.apiUrl}/api/swalook/staff/attendance/?branch_name=${bid}&staff_id=${staffId}&month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}`, {
         method: 'GET',
@@ -24,42 +25,38 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
           'Authorization': `Token ${token}`,
         },
       });
-  
+
       if (response.ok) {
         const attendanceResponse = await response.json();
         console.log("Fetched attendance data:", attendanceResponse);
-  
+
         const attendanceData = attendanceResponse.table_data;
-  
-        // Check if table_data contains the staff data keyed by their mobile number
+
         for (const mobileNumber in attendanceData) {
           const staffData = attendanceData[mobileNumber];
-  
-          // Match the staff ID with the provided ID
+
           if (staffData.id === staffId) {
             console.log("Staff ID matched!");
-  
+
             const newMarkedDates = {};
-  
-            // Mark present dates with "P"
+
             if (staffData?.present_dates?.length > 0) {
               staffData.present_dates.forEach((entry) => {
                 const date = new Date(entry.date).toDateString();
                 newMarkedDates[date] = "P"; // Mark as "Present"
               });
             }
-  
-            // Mark absent/leave dates with "A"
+
             if (staffData?.leave_dates?.length > 0) {
               staffData.leave_dates.forEach((entry) => {
                 const date = new Date(entry.date).toDateString();
                 newMarkedDates[date] = "A"; // Mark as "Absent"
               });
             }
-  
-            // Set marked dates in the state
+
             setMarkedDates(newMarkedDates);
-            setLoading(false); // Stop loading once data is fetched
+            setOriginalMarkedDates(newMarkedDates); // Store the original state
+            setLoading(false);
             break;
           } else {
             console.log("Staff ID did not match for this mobile number.");
@@ -74,15 +71,15 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
-    fetchAttendance(); // Fetch attendance when the component mounts
+    fetchAttendance();
   }, []);
 
   // Handle date click (mark or unmark attendance)
   const handleDateClick = (date) => {
     const dateString = date.toDateString();
-    
+
     if (date.getMonth() === currentMonth && date.getFullYear() === currentYear && date <= today) {
       setMarkedDates((prev) => ({
         ...prev,
@@ -93,16 +90,25 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
     }
   };
 
-  // Save attendance data
+  // Save only modified attendance data
   const saveAttendance = async () => {
-    const attendanceData = Object.keys(markedDates).map((dateString) => ({
-      of_month: new Date().getMonth() + 1,
-      year: new Date().getFullYear(),
-      attend: markedDates[dateString] === "P",
-      leave: markedDates[dateString] === "A",
-      date: dateString,
-      id: staffId,
-    }));
+    // Compare current marked dates with the original ones and get only modified dates
+    const modifiedDates = Object.keys(markedDates).filter((dateString) => {
+      return markedDates[dateString] !== originalMarkedDates[dateString];
+    });
+
+    const attendanceData = modifiedDates.map((dateString) => {
+      const dateObject = new Date(dateString);
+
+      return {
+        of_month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
+        attend: markedDates[dateString] === "P",
+        leave: markedDates[dateString] === "A",
+        date: dateObject,
+        id: staffId,
+      };
+    });
 
     const token = localStorage.getItem('token');
     const bid = localStorage.getItem('branch_id');
@@ -121,6 +127,8 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
         console.log('Attendance marked successfully');
         onAttendanceMarked(staffId, attendanceData);
         onClose();
+        //reload the window
+        window.location.reload();
       } else {
         console.error('Failed to mark attendance:', response.statusText);
       }
@@ -134,8 +142,8 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId }) => {
     if (view === "month") {
       const status = markedDates[date.toDateString()];
       return status === "P" ? <span className="attendance-present">✔️</span> :
-             status === "A" ? <span className="attendance-absent">❌</span> :
-             null;
+        status === "A" ? <span className="attendance-absent">❌</span> :
+        null;
     }
     return null;
   };

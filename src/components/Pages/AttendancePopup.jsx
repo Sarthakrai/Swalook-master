@@ -26,14 +26,16 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId, staffData }) =>
     const bid = localStorage.getItem('branch_id');
     
     const today = new Date().toISOString().split('T')[0];
-    const attendencedata = [{
-          of_month: new Date().getMonth() + 1,
-          year: new Date().getFullYear(),
-          attend: true,
-          leave: false,
-          date: today,
-    }]
+    const dateObject = new Date(today);
   
+    const attendancedata = [{
+      of_month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+      attend: true,
+      leave: false,
+      date: dateObject,
+    }];
+    
     try {
       const response = await fetch(`${config.apiUrl}/api/swalook/staff/attendance/?branch_name=${bid}&staff_id=${staffId}`, {
         method: 'POST',
@@ -42,28 +44,40 @@ const AttendancePopup = ({ onClose, onAttendanceMarked, staffId, staffData }) =>
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          json_data: attendencedata,
+          json_data: attendancedata,
         })
       });
-      console.log(response);
-  
+      
       const result = await response.json();
-      handleMarkAttendance();
-  
-      if (response.ok) {
-        onAttendanceMarked(staffId);
-        toast.success("Attendance marked successfully!");
-        onClose(); 
+      console.log(result); // Check the result from the server
+      
+      // Check if attendance already exists
+      if (response.ok && result.message === 'staff attendance already exists') {
+        toast.error("Attendance already marked for today."); // Show error toast if attendance already exists
+      } else if (response.ok && result.message !== 'staff attendance already exists') {
+        toast.success("Attendance marked successfully!"); // Show success toast for new attendance
+        onAttendanceMarked(staffId); // Perform any additional actions
+        onClose(); // Close the popup
       } else {
-        throw new Error(result?.errors?.date || 'Failed to mark attendance');
+        // If the response is not OK, handle the error based on the server response
+        const errorMessage = result?.errors?.date || 'Failed to mark attendance';
+        throw new Error(errorMessage); // Throw error with appropriate message
       }
     } catch (error) {
       console.error("Error marking attendance:", error);
-      toast.error(`attendence already marked: `);
+      
+      // Show different toast messages based on the error message
+      if (error.message.includes('already marked')) {
+        toast.error("Attendance already marked for today.");
+      } else {
+        toast.error(`Error marking attendance: ${error.message}`);
+      }
     } finally {
       setLoading(false); 
     }
   };
+  
+  
   
 
   const handleCancel = () => {

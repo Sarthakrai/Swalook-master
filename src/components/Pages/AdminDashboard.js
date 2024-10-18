@@ -407,7 +407,7 @@ function AdminDashboard() {
           <Tooltip title="Share on WhatsApp" arrow>
             <AiOutlineWhatsApp
               onClick={() => handleShareOnWhatsApp(row)}
-              style={{ cursor: "pointer" , fontSize:"24px" }}
+              style={{ cursor: "pointer" , fontSize:"24px", alignItems:"center", textAlign: "center", justifyContent: "center", marginLeft: "2rem" }}
             />
           </Tooltip>
         </td>

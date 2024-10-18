@@ -68,6 +68,8 @@ const AdminManagement = () => {
           console.log("Attendance Response:", attendanceData);
       
           const staffArray = Array.isArray(data.table_data) ? data.table_data : [];
+          const totalDays = attendanceData.current_month_days;
+          console.log("Total Days:", totalDays);
           const attendanceTable = attendanceData.table_data || {};
           console.log("dsbhj", attendanceTable);
       
@@ -76,7 +78,7 @@ const AdminManagement = () => {
           }
           const formattedData = staffArray.map(staff => {
             const attendanceRecord = attendanceTable[staff.mobile_no] || { number_of_days_present: 0 };
-            console.log("mkc", attendanceRecord)
+            console.log("records", attendanceRecord)
           return {
             id: staff.id || staff.staff_id || null,
             name: staff.staff_name || 'N/A',
@@ -86,7 +88,7 @@ const AdminManagement = () => {
             commission: parseFloat(staff.staff_slab) || 0, 
             attendance: {
               present: attendanceRecord.number_of_days_present,
-              total: getDaysInMonth(currentMonth, currentYear) // Total days in the current month
+              total: totalDays 
             },
             business: parseFloat(staff.business_of_the_current_month) || 0 
           };
